@@ -10,6 +10,16 @@ const webgl = initWebGL();
 const scroll = initScroll(({ progress, velocity, scrollY }) => {
     // Update WebGL shader uniform with scroll progress and position
     webgl.setScrollProgress(progress, scrollY);
+
+    // Toggle scroll indicator visibility
+    const indicator = document.querySelector('.scroll-indicator');
+    if (indicator) {
+        if (scrollY > 50) {
+            indicator.classList.add('hidden');
+        } else {
+            indicator.classList.remove('hidden');
+        }
+    }
 });
 
 // Portfolio HTML Structure
