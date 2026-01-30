@@ -107,8 +107,8 @@ body {
    ============================================ */
 
 .scroll-indicator {
-  position2 absolute;
-  bottom: 3rem;
+  position: absolute;
+  bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
