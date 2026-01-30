@@ -1,0 +1,623 @@
+/* ============================================
+   Portfolio 2026 - Global Styles
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --font-primary: 'Space Grotesk', system-ui, sans-serif;
+  --color-text: rgba(255, 255, 255, 0.95);
+  --color-text-dim: rgba(255, 255, 255, 0.6);
+  --color-accent: #00d4ff;
+  --color-purple: #4a0080;
+}
+
+/* Lenis smooth scroll requirements */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: #000;
+  color: var(--color-text);
+  overflow-x: hidden;
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   Main Content Layer (above WebGL canvas)
+   ============================================ */
+
+#app {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  mix-blend-mode: difference;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 10vw, 8rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+}
+
+/* ============================================
+   Scroll Indicator
+   ============================================ */
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  mix-blend-mode: difference;
+}
+
+.scroll-indicator span {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--color-text), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+/* ============================================
+   Section Headers
+   ============================================ */
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  mix-blend-mode: difference;
+}
+
+.section-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 300;
+  color: var(--color-text-dim);
+  letter-spacing: 0.05em;
+}
+
+/* ============================================
+   Projects Section
+   ============================================ */
+
+.projects {
+  padding: 6rem 0;
+  min-height: 100vh;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+/* ============================================
+   Animation Base States
+   ============================================ */
+
+[data-animate] {
+  will-change: transform, opacity;
+}
+
+/* ============================================
+   Glass Card Styles
+   ============================================ */
+
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2.5rem;
+  min-height: 380px;
+  border-radius: 24px;
+  cursor: pointer;
+  will-change: transform, opacity;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  /* Glass morphism effect */
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 212, 255, 0.05) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.project-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(0, 212, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+/* Card Content */
+.card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.card-category {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(0, 212, 255, 0.1);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.card-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+.card-description {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--color-text-dim);
+  margin-bottom: 1.5rem;
+  max-width: 90%;
+}
+
+/* Tech Stack Pills */
+.card-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.card-tech li {
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  padding: 0.35rem 0.7rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.project-card:hover .card-tech li {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Card Visual/Icon */
+.card-visual {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1;
+}
+
+.card-icon {
+  font-size: 4rem;
+  opacity: 0.15;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: grayscale(100%);
+}
+
+.project-card:hover .card-icon {
+  opacity: 0.4;
+  transform: scale(1.2) rotate(-5deg);
+  filter: grayscale(0%);
+}
+
+/* ============================================
+   Contact Section
+   ============================================ */
+
+.contact {
+  padding: 8rem 0;
+  text-align: center;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-text {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 300;
+  color: var(--color-text-dim);
+  line-height: 1.8;
+  margin: 2rem 0 3rem;
+  max-width: 500px;
+}
+
+.contact-links {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.contact-link {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .project-card {
+    min-height: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 0 1rem;
+  }
+  
+  .hero-title {
+    font-size: clamp(2rem, 12vw, 4rem);
+  }
+  
+  .hero-subtitle {
+    font-size: 0.875rem;
+  }
+  
+  .projects {
+    padding: 4rem 0;
+  }
+  
+  .project-card {
+    padding: 1.5rem;
+    min-height: 280px;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+  }
+  
+  .card-description {
+    font-size: 0.9rem;
+  }
+  
+  .contact-links {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .contact-link {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+/* iPhone 16 Pro Max specific */
+@media (max-width: 430px) and (max-height: 932px) {
+  .hero {
+    padding: 2rem 0;
+  }
+}
+
+/* ============================================
+   Morph Scroll Area (scroll space for transitions)
+   ============================================ */
+
+.morph-scroll-area {
+  position: relative;
+  height: 400vh; /* 4 projects x 100vh each */
+}
+
+.morph-trigger {
+  position: relative;
+  height: 100vh;
+}
+
+/* ============================================
+   Fixed Morphing Card
+   ============================================ */
+
+.morph-card-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.morph-card-container.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.morph-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: min(600px, 90vw);
+  min-height: 420px;
+  padding: 2.5rem;
+  border-radius: 24px;
+  overflow: hidden;
+  
+  /* Glass morphism */
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 60px rgba(0, 0, 0, 0.5),
+    0 0 80px rgba(0, 212, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.morph-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 212, 255, 0.05) 100%
+  );
+  pointer-events: none;
+}
+
+.morph-card .card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.morph-card .card-category {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(0, 212, 255, 0.1);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.morph-card .card-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+  color: var(--color-text);
+}
+
+.morph-card .card-description {
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--color-text-dim);
+  margin-bottom: 2rem;
+  max-width: 90%;
+}
+
+.morph-card .card-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  list-style: none;
+}
+
+.morph-card .card-tech li {
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.morph-card .card-icon {
+  font-size: 5rem;
+  opacity: 0.2;
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  filter: grayscale(50%);
+}
+
+/* Progress dots */
+.card-progress {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.progress-dots {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.progress-dot.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 12px var(--color-accent);
+  transform: scale(1.3);
+}
+
+/* Responsive for morph card */
+@media (max-width: 768px) {
+  .morph-card {
+    width: 90vw;
+    min-height: 360px;
+    padding: 1.5rem;
+  }
+  
+  .morph-card .card-icon {
+    font-size: 3rem;
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
