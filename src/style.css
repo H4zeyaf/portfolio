@@ -75,6 +75,7 @@ body {
    ============================================ */
 
 .hero {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -106,7 +107,7 @@ body {
    ============================================ */
 
 .scroll-indicator {
-  position: absolute;
+  position2 absolute;
   bottom: 3rem;
   left: 50%;
   transform: translateX(-50%);
